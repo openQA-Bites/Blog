@@ -5,6 +5,8 @@ categories:
   - openQA
 tags:
   - Scripting
+Summary: "This post describes the caveats and correct handling of the bash background operator within openQA."
+type: post
 ---
 Most of the openQA test cases run command sequentially. One command nicely after the next one. But in some cases it can be useful, to run a handful of commands in parallel and then wait for them to finish. Here we are covering the caveats of using the bash background operator `&` in openQA.
 
