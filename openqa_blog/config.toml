@@ -7,7 +7,7 @@ layoutdir     = "layouts"
 publishdir    = "public"
 
 DefaultContentLanguage = "en"
-theme = "beautiful-jekyll"
+theme = "beautifulhugo"
 metaDataFormat = "yaml"
 
 [params]
