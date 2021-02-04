@@ -16,7 +16,7 @@ metaDataFormat = "yaml"
 #pygmentsCodefencesGuessSyntax = true
 
 [params]
-  subtitle = "Stories and tutorials from a simple openQA dev"
+  subtitle = "Stories and tutorials from a humble openQA dev"
   logo = "img/avatar-icon.png"
   mainSections = ["post","posts"]
   favicon = "img/favicon.ico"

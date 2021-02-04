@@ -1,5 +1,5 @@
 ---
-title: "Background Scripts"
+title: "Background bash commands"
 date: 2021-02-04T14:50:02+01:00
 categories:
   - openQA
@@ -9,6 +9,8 @@ Summary: "This post describes the caveats and correct handling of the bash backg
 type: post
 ---
 Most of the openQA test cases run command sequentially. One command nicely after the next one. But in some cases it can be useful, to run a handful of commands in parallel and then wait for them to finish. Here we are covering the caveats of using the bash background operator `&` in openQA.
+
+The TL;DR is at the end of the post
 
 # Usage example
 
@@ -68,3 +70,11 @@ The correct solution would be to add a `true` at the end of the `sleep` command
 
     assert_script_run('sleep 30 & true');
     assert_script_run('wait');               # this works
+
+# TL;DR
+
+The correct way of running bash commands in the background is
+
+    assert_script_run('sleep 30 & true');
+    assert_script_run('sleep 30 & true');
+    assert_script_run('wait');
