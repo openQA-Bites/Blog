@@ -1,0 +1,33 @@
+baseURL = "http://openqa-blog/"
+title = "Felix' openQA stuff"
+languageCode = "en-us"
+canonifyurls  = true
+contentdir    = "content"
+layoutdir     = "layouts"
+publishdir    = "public"
+
+DefaultContentLanguage = "en"
+theme = "beautiful-jekyll"
+metaDataFormat = "yaml"
+
+[params]
+  subtitle = "Experiences from SUSE world"
+  logo = "img/avatar-icon.png"
+  favicon = "img/favicon.ico"
+  dateFormat = "January 2, 2006"
+  commit = false
+  rss = true
+  comments = false
+
+[Author]
+  name = "phoenix"
+  email = "felix.niederwanger@suse.de"
+  github = "grisu42"
+  linkedin = "felix.niederwanger"
+
+
+#[[menu.main]]
+#    name = "About"
+#    url = "page/about/"
+#    weight = 3
+
