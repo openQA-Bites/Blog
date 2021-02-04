@@ -1,29 +1,40 @@
 baseURL = "http://openqa-blog/"
-title = "Felix' openQA stuff"
+title = "openQA bites"
 languageCode = "en-us"
 canonifyurls  = true
 contentdir    = "content"
 layoutdir     = "layouts"
 publishdir    = "public"
+summaryLength = 25
 
 DefaultContentLanguage = "en"
 theme = "beautifulhugo"
 metaDataFormat = "yaml"
+#pygmentsStyle = "trac"
+#pygmentsUseClasses = true
+#pygmentsCodeFences = true
+#pygmentsCodefencesGuessSyntax = true
 
 [params]
-  subtitle = "Experiences from SUSE world"
+  subtitle = "Stories and tutorials from a simple openQA dev"
   logo = "img/avatar-icon.png"
+  mainSections = ["post","posts"]
   favicon = "img/favicon.ico"
   dateFormat = "January 2, 2006"
   commit = false
   rss = true
   comments = false
+  readingTime = true
+  wordCount = true
+  socialShare = true
 
 [Author]
   name = "phoenix"
   email = "felix.niederwanger@suse.de"
-  github = "grisu42"
-  linkedin = "felix.niederwanger"
+  github = "grisu48"
+  linkedin = "felix-niederwanger"
+  reddit = "grisu48"
+  mastodon = "https://chaos.social/@phoenix"
 
 
 #[[menu.main]]
