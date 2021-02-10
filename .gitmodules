@@ -1,6 +1,6 @@
-[submodule "openqa_blog/themes/beautiful-jekyll"]
-	path = openqa_blog/themes/beautiful-jekyll
-	url = https://github.com/daattali/beautiful-jekyll.git
-[submodule "openqa_blog/themes/beautifulhugo"]
-	path = openqa_blog/themes/beautifulhugo
+[submodule "themes/beautifulhugo"]
+	path = themes/beautifulhugo
 	url = https://github.com/halogenica/beautifulhugo.git
+[submodule "public"]
+	path = public
+	url = git@github.com:grisu48/grisu48.github.io.git
