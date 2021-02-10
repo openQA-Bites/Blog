@@ -1,6 +1,3 @@
 [submodule "themes/beautifulhugo"]
 	path = themes/beautifulhugo
 	url = https://github.com/halogenica/beautifulhugo.git
-[submodule "public"]
-	path = public
-	url = git@github.com:grisu48/grisu48.github.io.git

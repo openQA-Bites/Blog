@@ -1,4 +1,4 @@
-baseURL = "https://grisu48.github.io/"
+baseURL = "https://openQA-Bites.github.io/"
 title = "openQA bites"
 languageCode = "en-us"
 canonifyurls  = true
