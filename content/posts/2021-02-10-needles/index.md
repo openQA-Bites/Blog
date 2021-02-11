@@ -9,14 +9,14 @@ tags:
   - Needles
 
 ---
-In this blog post we are going to give you the most easy introduction to what needles are and how you can use them.
+In this blog post we are going to give you the easiest introduction to what needles are and how you can use them.
 While there are many good talks and documentation on needles out there, it took me longer than it should have to find a easy-to-use
 and easy-to-understand introduction into this topic alone.
 This blog post should fill this gap.
 
 # What is a needle?
 
-A needle is just a screenshot plus a definition, which part of that screenshot must match. Each of those parts has also a matching-parameter which determines, how good that region must match with the given prototype. Needles are identified by `tags`.
+A needle is just a screenshot plus a definition, which part of that screenshot must match. Each of those parts also has a matching-parameter which determines, how good that region must match with the given prototype. Needles are identified by `tags`.
 
 Let's break this description down top-to-bottom. This is a needle:
 
@@ -31,7 +31,7 @@ A needle also can handle mouse clicks, this will be covered later in this post.
 
 ## What are needles used for?
 
-openQA shines when it comes to GUI testing. It is able to interact with a machine (virtual or bare-metal) and interact with it. It does so, by matching needles to the visual output of that machine and/or perform commands within a terminal.
+openQA shines when it comes to GUI testing. It is able to interact with a machine (virtual or bare-metal) without the need of accessibility interfaces or an additional toolkit, nor does it need to install anything on the system under test. It does so, by matching needles to the visual output of that machine and/or perform commands within a terminal.
 
 Needles are used here to match the current screen output of a machine to a given predefined screenshot. For instance, when openQA tests the installation of a ISO image, it walks through the installation process screen by screen, matching each screen output of the machine against well-known needles and handling mouse clicks and typing events. Needles are just "look for XY" directives for openQA in order to validate, if the given screen is valid or not.
 openQA can do much more, but this is beyond the scope of this article.
