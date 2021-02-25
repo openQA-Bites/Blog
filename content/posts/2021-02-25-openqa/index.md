@@ -114,3 +114,7 @@ Usage example which is probably most commonly used:
                  -f  - Follow jobs (show restarted jobs) |       |
                  -c 10  - refresh every 10 seconds       |       # jobid plus next two jobs
                                                          # Instance and single job id
+
+`openqa-mon` also supports jobs across different instances, e.g.
+
+    openqa-mon -mfc 10 https://openqa.opensuse.org/tests/1644699 http://duck-norris/tests/18038
