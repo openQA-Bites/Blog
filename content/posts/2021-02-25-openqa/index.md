@@ -21,7 +21,7 @@ We have been using this tool for half a year already to monitor our virtualizati
 
 # Installation
 
-`openqa-mon` is about to be packaged via OBS (See my [home project for openqa-mon](https://build.opensuse.org/package/show/home:ph03nix/openqa-mon)) but not yet fully there. In the meantime there are two ways, how you can install `openqa-mon`. The easiest is to use the provided binaries from the [Alpha4 release on GitHub](https://github.com/grisu48/openqa-mon/releases/tag/v0.12a), or you build it yourself
+`openqa-mon` is about to be packaged via OBS (See my [home project for openqa-mon](https://build.opensuse.org/package/show/home:ph03nix/openqa-mon)) but not yet fully there. In the meantime there are two ways, how you can install `openqa-mon`. The easiest is to use the provided binaries from the [Alpha4 release on GitHub](https://github.com/grisu48/openqa-mon/releases/tag/v0.12a), or you build it yourself.
 
 ## Build instructions
 
