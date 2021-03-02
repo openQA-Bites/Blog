@@ -10,7 +10,7 @@ type: post
 ---
 Most of the openQA test cases run command sequentially. One command nicely after the next one. But in some cases it can be useful, to run a handful of commands in parallel and then wait for them to finish. Here we are covering the caveats of using the bash background operator `&` in openQA.
 
-The TL;DR is at the end of the post
+A TL;DR is at the end of the post.
 
 # Usage example
 
@@ -66,15 +66,39 @@ So, back to our starting point, if you enclose the commands in brackets, a subse
     assert_script_run('(sleep 30 & )');
     assert_script_run('wait');               # Will NOT wait for the sleep above!
 
-The correct solution would be to add a `true` at the end of the `sleep` command
+One possible solution would be to add a `true` at the end of the `sleep` command:
 
     assert_script_run('sleep 30 & true');
-    assert_script_run('wait');               # this works
+    assert_script_run('wait');               # this would works
+
+While thous would work, it is not really wise to use `assert_script_run` or `script_run` for background jobs. Both routines do much more than just running commands, and they might get confused by race conditions in the output or by the return value. Currently the suggested way is to use `type_string` for the background job:
+
+    type_string("sleep 30 &\n");
+
+And `script_run` for the `wait`. The reason to use here `script_run` is that we do not only want to type `wait`, but make openQA actually wait for that `wait` to complete
+
+    script_run('wait');       # No "\n" here anymore, don't get confused :-)
+
+## Why I stick to `script_run` as long as possible
+
+You see in the code segments above, that in `type_string` you have to add a "\n" at the end of the command. Plus, that one needs to be enclosed within `""` and not `''` because Perl. Since I'm not doing background jobs so often, that this becomes a routine, this will be a source of error and frustration every time I have to re-do it.
+
+If find this confusing and because normally it's already hard enough to figure out the other reasons why your test is failing, I'm gonna stick to `script_run`.
 
 # TL;DR
 
 The correct way of running bash commands in the background is
 
-    assert_script_run('sleep 30 & true');
-    assert_script_run('sleep 30 & true');
-    assert_script_run('wait');
+    type_string("sleep 30 &\n");     # Note: \n requires "" not ''
+    type_string("sleep 30 &\n");
+    script_run('wait');              # Don't use \n here!
+
+However, I find this confusing because you need to remember that `type_string` requires `""` because of the required newline at the end. Also, don't use `type_string` for the `wait`, otherwise openQA will go on without waiting for the jobs.
+This is why I'm gonna stick to `script_run` as long as possible:
+
+    script_run('sleep 30 & true');     # works with ''
+    script_run("sleep 30 & true");     # works with ""
+    script_run('wait');                # no confusion with "\n" in this example
+
+For this case, `script_run` is one unified command that behaves in the same way for all three and without those caveats.
+I'm pretty sure, a lot of people will disagree with this approach though :-)
