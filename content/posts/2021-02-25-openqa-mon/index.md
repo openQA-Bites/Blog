@@ -13,6 +13,8 @@ tags:
 ---
 [`openqa-mon`](https://github.com/grisu48/openqa-mon) is a little command-line utility to monitor one or multiple openQA jobs for their status. This tool is useful if you want to live monitor a handful of jobs closely e.g. for verification runs.
 
+![Demo screencast showing jobs poping up and changing their state](openqa-mon-demo.gif)
+
 ## Example
 
 We have been using this tool for half a year already to monitor our virtualization runs. Virtualization runs are a complex construct that run on bare-metal hosts. Our virtualization setup is constantly improving but still sometimes a bit fragile and requires close monitoring. This is what this tool was originally created for.
@@ -21,22 +23,29 @@ We have been using this tool for half a year already to monitor our virtualizati
 
 # Installation
 
-`openqa-mon` is about to be packaged via OBS (See my [home project for openqa-mon](https://build.opensuse.org/package/show/home:ph03nix/openqa-mon)) but not yet fully there. In the meantime there are two ways, how you can install `openqa-mon`. The easiest is to use the provided binaries from the [Alpha4 release on GitHub](https://github.com/grisu48/openqa-mon/releases/tag/v0.12a), or you build it yourself.
+[`openqa-mon`](https://github.com/grisu48/openqa-mon) is packaged in my [tools project on OBS](https://build.opensuse.org/project/show/home:ph03nix:tools). The easiest way to install this on openSUSE is to install it via [software.opensuse.org](https://software.opensuse.org/package/openqa-mon) and follow the instructions there. With this approach you will also get updates via your package manager.
+For Tumbleweed e.g. the following should work for you:
 
-## Build instructions
+    zypper addrepo https://download.opensuse.org/repositories/home:ph03nix:tools/openSUSE_Tumbleweed/home:ph03nix:tools.repo
+    zypper refresh
+    zypper install openqa-mon
 
-`openqa-mon` is intentionally kept tidy, so this tool is happy with just a basic go compiler and does not require any external libraries until now.
+I'm currently only building for openSUSE/SLE. For other distributions you either use the released binaries from the [release page on GitHub](https://github.com/grisu48/openqa-mon/releases) or you follow the following manual build instructions (easy).
 
-    git clone https://github.com/grisu48/openqa-mon
-    cd openqa-mon
-    make openqa-mon
-    ./openqa-mon -h
+## Building it yourself
 
-This builds the binary `openqa-mon`, which then ends up in the current directory. For systemwide access copy this file to `/usr/local/bin` (or similar).
+In a nutshell:
+
+    make requirements     # install requirements
+    make
+    sudo make install     # install the binaries to /usr/local/bin
+    make install ~/bin    # install the binaries to bin in your home directory
+
+`make requirements` downloads all required libraries via `go get`. The `make` command builds the program.
 
 # Usage
 
-The most basic usage is the following:
+The usage is the following:
 
     openqa-mon [OPTIONS] JOBS
 
