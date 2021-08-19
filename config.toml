@@ -39,19 +39,34 @@ metaDataFormat = "yaml"
 
 
 [[menu.main]]
+    identifier = "about"
     name = "About"
     url = "/about/"
     weight = 3
 [[menu.main]]
+    identifier = "related"
     name = "Related"
     url = "/related/"
     weight = 3
 [[menu.main]]
+    identifier = "tags"
     name = "Tags"
     url = "/tags/"
     weight = 2
 [[menu.main]]
+    identifier = "categories"
     name = "Categories"
     url = "/categories/"
     weight = 2
+[[menu.main]]
+    identifier = "openqa"
+    name = "openQA"
+    url = "/openqa/"
+    weight = 1
+[[menu.main]]
+    identifier = "openqacli-cheats"
+    parent = "openqa"
+    name = "openqa-cli cheat sheet"
+    url = "/openqa/openqa-cli-cheat-sheet"
+    weight = 1
 
