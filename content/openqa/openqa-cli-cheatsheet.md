@@ -43,4 +43,4 @@ This is often referred to as "isos post" because it is to [start testing a new I
 
 ## ... delete a job?
 
-    openqa-cli api --host http://duck-norris.host -X POST DELETE jobs/1234
+    openqa-cli api --host http://duck-norris.host -X DELETE jobs/1234
