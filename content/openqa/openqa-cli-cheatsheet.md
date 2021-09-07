@@ -41,6 +41,28 @@ This is often referred to as "isos post" because it is to [start testing a new I
 
     openqa-cli api --host http://duck-norris.host -X POST isos ARCH=x86_64 DISTRI=sle ...
 
+### Post a new job with `json` parameters
+
+To post a job with settings from a `json` file
+
+    openqa-cli api --host http://duck-norris.host --data-file FILE.json --form -X POST isos
+
+The parameters `DISTRI`, `VERSION`, `ARCH` and `FLAVOR` are then taken from the json file. The `FILE.json` looks like the following:
+
+```json
+{
+    "DISTRI": "opensuse",
+    "VERSION": "tumbleweed",
+    "ARCH": "x86_64",
+    "FLAVOR": "GCE-Updates",
+    "IMAGE_ID": "image-test12345",
+    "IMAGE_BASE": "publiccloud_tools.qcow2"
+    "INCIDENT_ID": 12345,
+    "BUILD": ":12345:kernel",
+    "_OBSOLETE": "1",
+}
+```
+
 ## ... delete a job?
 
     openqa-cli api --host http://duck-norris.host -X DELETE jobs/1234
