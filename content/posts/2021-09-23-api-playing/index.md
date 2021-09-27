@@ -23,6 +23,8 @@ Downloadable files:
 
 Both example files should work as stand-alone without any prior configuration (especially no API keys required).
 
+**[2021-09-27] Update**: The [workshop video](https://www.youtube.com/watch?v=RUVtn6unMfs) is now online as well.
+
 ## Exercise 1: Simple job overview program
 
 The first thing is that we want to query the job status of a certain job group and display all jobs on the terminal. Because colors are cool, we color-code each job line according to the status. For this exercise we are going to display the latest [openSUSE Leap 15.3 Images](https://openqa.opensuse.org/group_overview/77) test runs.
