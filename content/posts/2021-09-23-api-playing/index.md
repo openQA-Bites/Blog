@@ -9,6 +9,7 @@ tags:
   - openqa
   - api
   - scripting
+  - python
 
 ---
 Today we are going to play a bit around with the amazing API that every openQA instance provides.
