@@ -10,7 +10,7 @@ tags:
   - Hyper-V
 
 ---
-In this encore to the [Run Azure images in Hyper-V or kvm](/posts/2021-12-01-run-azure-image-on-hyperv/) will briefly discuss, if it is possible to create your own Hyper-V Windows Hypervisor as a kvm guest on Linux.
+In this encore to the [Run Azure images in Hyper-V or kvm](/posts/2021-12-01-run-azure-image-on-hyperv/) will briefly discuss, if it is possible to create your own Hyper-V Windows Hypervisor as a kvm guest on openSUSE Tumbleweed.
 
 **No, you can't** (at least not on my Intel-Based Laptop).
 
