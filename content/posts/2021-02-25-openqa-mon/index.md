@@ -23,6 +23,12 @@ We have been using this tool for half a year already to monitor our virtualizati
 
 # Installation
 
+**Update 2021-12-06**: `openqa-mon` is now in the main `Tumbleweed` repository. You can install it via
+
+    # zypper in openqa-mon
+
+* * *
+
 [`openqa-mon`](https://github.com/grisu48/openqa-mon) is packaged in my [tools project on OBS](https://build.opensuse.org/project/show/home:ph03nix:tools). The easiest way to install this on openSUSE is to install it via [software.opensuse.org](https://software.opensuse.org/package/openqa-mon) and follow the instructions there. With this approach you will also get updates via your package manager.
 For Tumbleweed e.g. the following should work for you:
 
