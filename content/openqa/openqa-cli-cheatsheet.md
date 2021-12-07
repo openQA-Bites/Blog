@@ -27,7 +27,7 @@ I use job id `1234` as an example ID. Replace with the actual job ID.
 
     openqa-cli api -X POST --host http://duck-norris.host jobs/1234/restart
 
-Restart a job but not it's [directly chained parents](http://open.qa/docs/#_notes_regarding_directly_chained_dependencies)
+Restart a job but not its [directly chained parents](http://open.qa/docs/#_notes_regarding_directly_chained_dependencies)
 
     openqa-cli api --host http://duck-norris.host -X POST jobs/1234/restart skip_parents=1
 
@@ -37,9 +37,9 @@ Restart a job but not it's [directly chained parents](http://open.qa/docs/#_note
 
 ## ... start/post a new job?
 
-This is often referred to as "isos post" because it is to [start testing a new ISO](http://open.qa/docs/#_adding_a_new_iso_to_test), although it also applies to non-iso images nowadays
-
     openqa-cli api --host http://duck-norris.host -X POST isos ARCH=x86_64 DISTRI=sle ...
+
+This is often referred to as "isos post" because it has been used to [test an ISO image](http://open.qa/docs/#_adding_a_new_iso_to_test). Nowadays we are also testing non-iso images
 
 ### Post a new job with `json` parameters
 
