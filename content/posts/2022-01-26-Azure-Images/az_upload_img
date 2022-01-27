@@ -1,0 +1,142 @@
+#!/bin/bash -e
+# 
+# Summary: Upload a given vdh image to Azure
+# License: WTFPL (http://www.wtfpl.net/about/)
+# Copy this file to ~/bin for easy access within the terminal
+
+## Variables ###################################################################
+
+# You can define your default values here, for your convenience
+
+STORAGEACCOUNT=""                      # Azure storage account
+CONTAINERNAME="bucket"                 # Container within this storage account
+IMAGENAME=""                           # Filename within container
+RESOURCEGROUP=""                       # Resource group
+DISKNAME=""                            # Intermittent disk name
+NAME=""                                # Resulting image name
+INFILE=""                              # Input file name
+
+## Program body ################################################################
+
+function usage {
+	echo "Usage: $(basename $0) [-acirdfn]"
+	echo "   -a   Define storage account"
+	echo "   -c   Define container name (default: $CONTAINERNAME)"
+	echo "   -i   Define container filename"
+	echo "   -r   Define resource group"
+	echo "   -d   Define disk name"
+	echo "   -f   Input file"
+	echo "   -n   Image name"
+}
+
+if [[ $# -lt 1 ]]; then
+	usage
+	exit 1
+fi
+
+
+## Program argument parsing
+
+while getopts ":a:c:i:r:d:f:n:" opt; do
+	case $opt in
+		a)
+			STORAGEACCOUNT="$OPTARG"
+			;;
+		c)
+			CONTAINERNAME="$OPTARG"
+			;;
+		i)
+			IMAGENAME="$OPTARG"
+			;;
+		r)
+			RESOURCEGROUP="$OPTARG"
+			;;
+		d)
+			DISKNAME="$OPTARG"
+			;;
+		f)
+			INFILE="$OPTARG"
+			;;
+		n)
+			NAME="$OPTARG"
+			;;
+		?)
+			usage
+			exit 0
+			;;
+		h)
+			usage
+			exit 0
+			;;
+		:)
+			echo "Option -$opt requires an argument" >&2
+			exit 1
+			;;
+	esac
+done
+
+# Check required arguments
+
+if [[ $STORAGEACCOUNT == "" ]]; then
+	echo "No storage account (-a) given" >&2
+	exit 1
+fi
+if [[ $NAME == "" ]]; then
+	echo "No imagename (-n) given" >&2
+	exit 1
+fi
+if [[ $INFILE == "" ]]; then
+	echo "No input file (-f) given" >&2
+	exit 1
+fi
+if [[ $RESOURCEGROUP == "" ]]; then
+	echo "No resource group (-r) given" >&2
+	exit 1
+fi
+if [[ -s "INFILE" ]]; then
+	echo "Input file does not exist or is empty"
+	exit 2
+fi
+
+# Set defaults
+if [[ $IMAGENAME == "" ]]; then
+	IMAGENAME="$(basename $INFILE)"
+fi
+if [[ $DISKNAME == "" ]]; then
+	DISKNAME="$IMAGENAME"
+fi
+
+
+## Check if we need to unpack the disk image
+if [[ $INFILE == *.xz ]]; then
+	echo "Unpacking disk image ... "
+	unxz "$INFILE"
+	INFILE="$(basename $INFILE .xz)"
+fi
+# Rename custom extension
+if [[ $INFILE == *.vhdfixed ]]; then
+	mv "$INFILE" "$(basename $INFILE .vdhfixed).vdh"
+	INFILE="$(basename $INFILE .vdhfixed).vdh"
+fi
+
+
+# Upload blob
+echo "Uploading blob ... "
+az storage blob upload --account-name "$STORAGEACCOUNT" --container-name "$CONTAINERNAME" --file "$INFILE" --type page --name "$IMAGENAME"
+# Create disk out of blob
+echo "Create disk ... "
+az disk create --resource-group "$RESOURCEGROUP" --name "$DISKNAME" --source "https://${STORAGEACCOUNT}.blob.core.windows.net/${CONTAINERNAME}/${IMAGENAME}"
+# Create image out of disk
+echo "Create image ... "
+az image create --resource-group "$RESOURCEGROUP" --name "$NAME" --os-type Linux --source "$DISKNAME"
+
+echo -e "\n\nTask completed successfully. Created the new image $NAME in the resource group $RESOURCEGROUP"
+
+## Cleanup
+echo "Cleanup of intermittent resources ... "
+# Remove disk
+az disk delete --resource-group "$RESOURCEGROUP" --name "$DISKNAME" --yes
+# Delete blob
+az storage blob delete --account-name "$STORAGEACCOUNT" --container-name "$CONTAINERNAME" --name "$IMAGENAME"
+
+echo "Done"
