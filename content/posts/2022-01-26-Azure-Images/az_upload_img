@@ -106,17 +106,27 @@ if [[ $DISKNAME == "" ]]; then
 	DISKNAME="$IMAGENAME"
 fi
 
+# Cleanup routine
+RMFILES=""           # Temporary files to be deleted
+function cleanup {
+	if [[ $RMFILES != "" ]]; then
+		rm -f $RMFILES
+	fi
+}
+trap cleanup EXIT
 
 ## Check if we need to unpack the disk image
 if [[ $INFILE == *.xz ]]; then
 	echo "Unpacking disk image ... "
-	unxz "$INFILE"
+	unxz -k "$INFILE"
 	INFILE="$(basename $INFILE .xz)"
+	RMFILES="$RMFILES $INFILE"
 fi
 # Rename custom extension
 if [[ $INFILE == *.vhdfixed ]]; then
-	mv "$INFILE" "$(basename $INFILE .vdhfixed).vdh"
-	INFILE="$(basename $INFILE .vdhfixed).vdh"
+	mv "$INFILE" "$(basename $INFILE .vhdfixed).vdh"
+	INFILE="$(basename $INFILE .vhdfixed).vdh"
+	RMFILES="$RMFILES $INFILE"
 fi
 
 
