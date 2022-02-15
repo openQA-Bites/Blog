@@ -13,6 +13,14 @@ tags:
 ---
 [poetry](https://python-poetry.org/) is (yet another) python packaging and dependency management system. In this blog post I'm gonna describe how I am working with poetry repositories within [VS Codium](https://vscodium.com/), the freely licensed variant of VS Code.
 
+Now, the most easy way is to simply run
+
+    poetry run codium      # VS Codium
+    poetry run code        # VS Code
+
+In this case, `poetry` sets up the environment for you and you should be ready to go.
+However if for some reason that does not work for you or it is inpractical, one can configure it also manually. This is what we will do in this tutorial.
+
 In this tutorial we will:
 
 1. Create a new poetry project
