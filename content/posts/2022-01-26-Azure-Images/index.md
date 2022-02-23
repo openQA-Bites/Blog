@@ -160,7 +160,8 @@ VMNAME="zoidberg"                       # Give your VM a nice name!
 # $NAME is the image name from the previous step
 
 az vm create --resource-group "$RESOURCEGROUP" --name "$VMNAME" --image "$NAME" \
-  --size Standard_A2_v2 --admin-username phoenix --ssh-key-values ~/.ssh/id_rsa.pub
+  --size Standard_A2_v2 --admin-username phoenix --ssh-key-values ~/.ssh/id_rsa.pub \
+  --public-ip-sku Standard
 ```
 
 Modify the `admin-username` and the location for your ssh key accordingly. I'm just using the default stuff.
