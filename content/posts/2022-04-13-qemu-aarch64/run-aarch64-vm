@@ -1,0 +1,34 @@
+#!/bin/bash -e
+
+#### Settings ##################################################################
+# Memory usage (2 GiB)
+MEM="2G"
+# Number of virtual CPUs
+VCPU=2
+
+## Define your disk image here
+#disk=openSUSE-Leap-15.3-ARM-JeOS-efi.aarch64-2022.03.04-Build9.443.qcow2
+## or set it as program argument:
+disk=$1
+
+# Check for empty disk and exit
+if [[ -z $disk  ]]; then
+	echo "Usage: $0 IMAGE"
+	exit 1
+fi
+
+# Prepare EFI vars
+qemuefi="/usr/share/qemu/aavmf-aarch64-code.bin"
+truncate -s 64m varstore.img
+truncate -s 64m efi.img && dd if=$qemuefi of=efi.img conv=notrunc
+
+# Remove efi vars file on exit
+function cleanup {
+	rm -f varstore.img efi.img
+}
+trap cleanup EXIT
+
+# Run VM command
+qemu-system-aarch64 -nographic -machine virt,gic-version=max -m $MEM -cpu max -smp $VCPU \
+  -drive "file=$disk,if=none,id=drive0,cache=writeback" -device virtio-blk,drive=drive0,bootindex=0 \
+  -drive file=efi.img,format=raw,if=pflash -drive file=varstore.img,format=raw,if=pflash
