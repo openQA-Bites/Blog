@@ -1,34 +1,40 @@
 #!/bin/bash -e
 
 #### Settings ##################################################################
-# Memory usage (2 GiB)
 MEM="2G"
-# Number of virtual CPUs
 VCPU=2
 
-## Define your disk image here
-#disk=openSUSE-Leap-15.3-ARM-JeOS-efi.aarch64-2022.03.04-Build9.443.qcow2
-## or set it as program argument:
-disk=$1
-
+## Define your disk image via program argument:
+disk="$1"
 # Check for empty disk and exit
-if [[ -z $disk  ]]; then
-	echo "Usage: $0 IMAGE"
+if [[ -z $disk ]]; then
+	echo "Usage: $0 IMAGE [OPTIONS]"
+	echo "OPTIONS  - additional options passed to qemu-system-aarch64"
+	echo "  e.g.   --nographic        No graphical output, attach serial terminal"
+	echo "To add HID (keyboard/mouse) you need to add the following:"
+	echo " -device qemu-xhci -device usb-kbd -device usb-tablet"
 	exit 1
 fi
+shift
+
 
 # Prepare EFI vars
-qemuefi="/usr/share/qemu/aavmf-aarch64-code.bin"
-truncate -s 64m varstore.img
-truncate -s 64m efi.img && dd if=$qemuefi of=efi.img conv=notrunc
+truncate -s 64m varstore.img && dd if="/usr/share/qemu/aavmf-aarch64-suse-vars.bin" of=varstore.img conv=notrunc
 
 # Remove efi vars file on exit
 function cleanup {
-	rm -f varstore.img efi.img
+	# Note: Add efi.img if you run the extended variant below
+	rm -f varstore.img
 }
 trap cleanup EXIT
 
-# Run VM command
-qemu-system-aarch64 -nographic -machine virt,gic-version=max -m $MEM -cpu max -smp $VCPU \
-  -drive "file=$disk,if=none,id=drive0,cache=writeback" -device virtio-blk,drive=drive0,bootindex=0 \
-  -drive file=efi.img,format=raw,if=pflash -drive file=varstore.img,format=raw,if=pflash
+## Run VM (simple)
+qemu-system-aarch64 -machine virt,gic-version=max -m $MEM -cpu max -smp $VCPU \
+  -device virtio-gpu-pci -bios /usr/share/qemu/aavmf-aarch64-code.bin -hda "$disk" $@
+
+## Run VM (extended)
+#truncate -s 64m efi.img && dd if=/usr/share/qemu/aavmf-aarch64-code.bin of=efi.img conv=notrunc
+#qemu-system-aarch64 -nographic -machine virt,gic-version=max -m $MEM -cpu max -smp $VCPU \
+#  -drive "file=$disk,if=none,id=drive0,cache=writeback" -device virtio-blk,drive=drive0,bootindex=0 \
+#  -drive file=efi.img,format=raw,if=pflash -drive file=varstore.img,format=raw,if=pflash \
+#  $@
