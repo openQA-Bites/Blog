@@ -29,7 +29,7 @@ Asset download requested but no domains passlisted! Set download_domains.
 
 **Reason**
 
-You probably have somewhere in your POST a setting with the `_URL` suffix. Settings with `_URL` are reserved by openQA for automatic asset fetching. e.g. you can download an asset from a URL and use this as your main hard disk:
+You probably have somewhere in your POST a setting with the `_URL` suffix. Settings with `_URL` are reserved by openQA for automatic asset fetching. e.g. you can [download an asset from a URL](http://open.qa/docs/#_specifying_assets_required_by_a_job) and use this as your main hard disk:
 
     HDD_1=remote_asset.qcow2
     HDD_1_URL=http://my-magic.pot/remote_asset.qcow2
