@@ -4,6 +4,7 @@ author: phoenix
 type: page
 url: /openqa/openqa-cli-cheat-sheet
 date: 2021-08-19T13:46:21+02:00
+lastmod: 2022-07-14T13:17:25+02:00
 
 ---
 `openqa-cli` is a command-line utility for interacting with openQA. The tool is versatile and allows you to control and interact with an arbitrary openQA instance from the comfort of your command line. While the internal help is quiet comprehensive, I list some of the most basic tasks in the form of a tutorial or knowledge base here.
@@ -11,6 +12,8 @@ date: 2021-08-19T13:46:21+02:00
 Within this page the hostname `duck-norris.host` refers to a custom openQA instance. Replace it with your own hostname.
 
 I use job id `1234` as an example ID. Replace with the actual job ID.
+
+Scroll down to see some common pitfalls and troubleshooting when interacting with the CLI.
 
 # How do I ...
 
@@ -66,3 +69,10 @@ The parameters `DISTRI`, `VERSION`, `ARCH` and `FLAVOR` are then taken from the 
 ## ... delete a job?
 
     openqa-cli api --host http://duck-norris.host -X DELETE jobs/1234
+
+***
+
+# Troubleshooting and pitfalls
+
+* [Asset download request but no domains passlisted](/posts/2022-07-14-asset_download_request_but_no_domains_passlisted/)
+
