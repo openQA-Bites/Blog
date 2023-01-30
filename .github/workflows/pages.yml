@@ -4,6 +4,10 @@ name: hugo publish
   push:
     branches:
     - main
+  pull_request:
+    branches:
+    - main
+
 
 jobs:
   build-deploy:
@@ -30,3 +34,4 @@ jobs:
       with:
         emptyCommits: false
         commitMessage: ${{ github.event.head_commit.message }}
+      if: ${{ github.event_name == 'push' }}
