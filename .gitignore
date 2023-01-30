@@ -1,3 +1,6 @@
 # Ignore public folder
 public
 public/*
+
+# Ignore hugo files
+.hugo_build.lock

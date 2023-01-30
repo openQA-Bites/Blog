@@ -27,6 +27,7 @@ metaDataFormat = "yaml"
   readingTime = true
   wordCount = true
   socialShare = true
+  selfHosted = true
 
 [Author]
   name = "phoenix"
