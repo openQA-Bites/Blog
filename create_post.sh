@@ -4,7 +4,7 @@
 #
 
 # Directory for input
-POSTS="content/posts"
+POSTS="content/posts/`date +%Y`"
 TEMPLATE=".template.md"
 FOLDER=0
 TITLE=""
