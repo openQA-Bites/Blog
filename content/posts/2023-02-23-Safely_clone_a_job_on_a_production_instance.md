@@ -1,0 +1,36 @@
+---
+title: Safely clone a job on a production instance
+author: phoenix
+type: post
+date: 2023-02-23T14:42:22+01:00
+categories:
+  - openqa
+tags:
+  - openqa
+---
+When developing new openQA tests you will have to run a lot of verification and debug test runs.
+This is why I typically encourage people to do all openQA testing on their own instances, to prevent spamming of the production instances.
+
+However there are situations, in which you can't do everything on your own instance. Examples of such situations are runs on different architectures, or if you rely on the network infrastructure of the production instance.
+
+### TL;DR
+
+```
+openqa-clone-job ... _GROUPID=0 [BUILD=wuseldusel]
+```
+
+`_GROUPID=0` is obligatory, `BUILD` is optional.
+
+# Cloning jobs without screwing up exisiting jobs
+
+Just set `_GROUPID=0`. Done. You're good. Bonus points for also modifying `BUILD`, but that's not strictly necessary.
+
+Jobs are grouped by their group id. If you set it to the non-existing group ID 0, the job won't appear in the listing, nor will it count for the original job group.
+
+This is important, because otherwise if you clone a job, that job will become the new job on the production instance. If the job fails it might appear as a false positive to reviewers and the release automation.
+Or worse, if a failed job becomes passing, you risk that someone might accidentally release a regression.
+
+Don't do that. Use `_GROUPID=0`. And modify also `BUILD` so that it will not appear in the most recent ones. Practically this is an additional safeguard.
+
+And don't forget that you can (and should!) use `BUILD` for your own enjoyment. The possibilities are endless 😉
+
