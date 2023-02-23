@@ -2,7 +2,8 @@
 title: Safely clone a job on a production instance
 author: phoenix
 type: post
-date: 2023-02-23T14:42:22+01:00
+date: 2023-02-23T14:42:22+02:00
+Lastmod: 2023-02-23T16:19:05+02:00
 categories:
   - openqa
 tags:
@@ -15,15 +16,21 @@ However there are situations, in which you can't do everything on your own insta
 
 ### TL;DR
 
+Use `openqa-clone-custom-git-refspec`, which already takes care of those things for you. Or:
+
 ```
 openqa-clone-job ... _GROUPID=0 [BUILD=wuseldusel]
 ```
 
-`_GROUPID=0` is obligatory, `BUILD` is optional.
+`_GROUP_ID=0` is obligatory, `BUILD` is optional.
 
-# Cloning jobs without screwing up exisiting jobs
+Change `PUBLISH_HDD_x` variables, if present, to avoid asset overwrite.
 
-Just set `_GROUPID=0`. Done. You're good. Bonus points for also modifying `BUILD`, but that's not strictly necessary.
+# Cloning jobs without screwing up existing jobs
+
+When you use `openqa-clone-custom-git-refspec`, you're already good. Otherwise just set `_GROUP_ID=0`. Done. You're good. Bonus points for also modifying `BUILD`, but that's not strictly necessary. `BUILD=` (empty or not set `BUILD` variable) is used by [geekotest](https://github.com/os-autoinst/openqa_review) is possible but can screw up the WebUI if used wrongly. Use any other string that marks it as your playground runs, e.g. `BUILD=20230223-phoenix-test`. Adding a date is useful.
+
+If preset, also change the `PUBLISH_HDD` variables to avoid that assets will be overwritten.
 
 Jobs are grouped by their group id. If you set it to the non-existing group ID 0, the job won't appear in the listing, nor will it count for the original job group.
 
@@ -33,4 +40,3 @@ Or worse, if a failed job becomes passing, you risk that someone might accidenta
 Don't do that. Use `_GROUPID=0`. And modify also `BUILD` so that it will not appear in the most recent ones. Practically this is an additional safeguard.
 
 And don't forget that you can (and should!) use `BUILD` for your own enjoyment. The possibilities are endless 😉
-
