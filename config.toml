@@ -32,7 +32,6 @@ metaDataFormat = "yaml"
 [Author]
   name = "phoenix"
   email = "felix.niederwanger@suse.de"
-  twitter = "grisu48"
   github = "grisu48"
   linkedin = "felix-niederwanger"
   reddit = "grisu48"
