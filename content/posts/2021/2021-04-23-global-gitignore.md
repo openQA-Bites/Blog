@@ -10,7 +10,7 @@ tags:
   - Codium
 
 ---
-Integrated development environemnts (IDE) are using their own folders withing your code repositories to store their settings.
+Integrated development environemnts (IDE) are using their own folders within your code repositories to store their settings.
 This can become annoying when working on a git repository and they keep popping up as untracked files:
 
 ```bash
