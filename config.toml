@@ -30,7 +30,7 @@ metaDataFormat = "yaml"
   socialShare = true
   selfHosted = true
 
-[Author]
+[params.author]
   name = "phoenix"
   email = "felix.niederwanger@suse.de"
   github = "grisu48"
