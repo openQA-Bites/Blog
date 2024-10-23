@@ -19,18 +19,32 @@ However there are situations, in which you can't do everything on your own insta
 Use `openqa-clone-custom-git-refspec`, which already takes care of those things for you. Or:
 
 ```
-openqa-clone-job ... _GROUP=0 [BUILD=wuseldusel]
+openqa-clone-job ... _GROUP=0 [BUILD=wuseldusel] [TEST=wuseldusel]
+openqa-clone-job ... _GROUP=0 {TEST,BUILD}+=-phoenix-poo123456
 ```
 
-`_GROUP=0` is obligatory, `BUILD` is optional.
+`_GROUP=0` is obligatory, `BUILD` and `TEST` are optional. If you don't set them, the cloned job will stil show up in the Next/Previous job list.
 
-Change `PUBLISH_HDD_x` variables, if present, to avoid asset overwrite.
+Change or remove `PUBLISH_HDD_x` variables, if present, to avoid asset overwrite.
 
 # Cloning jobs without screwing up existing jobs
 
-When you use `openqa-clone-custom-git-refspec`, you're already good. Otherwise just set `_GROUP=0`. Done. You're good. Bonus points for also modifying `BUILD`, but that's not strictly necessary. `BUILD=` (empty or not set `BUILD` variable) is used by [geekotest](https://github.com/os-autoinst/openqa_review) is possible but can screw up the WebUI if used wrongly. Use any other string that marks it as your playground runs, e.g. `BUILD=20230223-phoenix-test`. Adding a date is useful.
+*First: [Read the documentation page on this topic](http://open.qa/docs/#_trigger_new_tests_by_modifying_settings_from_existing_test_runs) because this blog post might be outdated by the time you're reading this.*
+
+When you use `openqa-clone-custom-git-refspec`, you're already good.
+
+When using the `openqa-clone-job` tool you need to manually set `_GROUP=0` and a custom `BUILD` and a custom `TEST` setting.
+`BUILD` and `TEST` are not strictly necessary, but if you don't set them, the new job will be still considered part of the same scenario. This means it can show up in the WebUI and in the Next/Previous jobs listing.
 
 If preset, also change the `PUBLISH_HDD` variables to avoid that assets will be overwritten.
+
+This is how a complete command could look like:
+
+```
+openqa-clone-job https://openqa.opensuse.org/tests/1 _GROUP=0 {TEST,BUILD}+=-phoenix-poo123456
+```
+
+Additional trick: by using `+=`, you only add the additional suffix but leave the original settings intact.
 
 Jobs are grouped by their group id. If you set it to the non-existing group ID 0, the job won't appear in the listing, nor will it count for the original job group.
 
@@ -39,8 +53,12 @@ Or worse, if a failed job becomes passing, you risk that someone might accidenta
 
 Don't do that. Use `_GROUP=0`. And modify also `BUILD` so that it will not appear in the most recent ones. Practically this is an additional safeguard.
 
+You should also set a custom `TEST=` variable to avoid that the cloned job is being considered as part of the same scenario. This would make it show up in the job's Next/Previous tab.
+
 And don't forget that you can (and should!) use `BUILD` for your own enjoyment. The possibilities are endless 😉
 
 ***
 
 **Edit 2024-02-13** Updated post to use `_GROUP=0` everywhere.
+
+**Edit 2024-10-24** Updated post to include `TEST=` everywhere.
