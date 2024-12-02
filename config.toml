@@ -69,4 +69,10 @@ metaDataFormat = "yaml"
     name = "openqa-cli cheat sheet"
     url = "/openqa/openqa-cli-cheat-sheet"
     weight = 1
+[[menu.main]]
+    identifier = "Cloning jobs on production instance"
+    parent = "openqa"
+    name = "cloning jobs on production instance"
+    url = "/posts/2023/2023-02-23-safely_clone_a_job_on_a_production_instance/"
+    weight = 2
 
