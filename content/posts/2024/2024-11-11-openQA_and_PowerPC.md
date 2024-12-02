@@ -3,6 +3,7 @@ title: openQA and PowerPC
 author: phoenix
 type: post
 date: 2024-11-11T11:14:48+01:00
+Lastmod: 2024-12-02T10:50:00+01:00
 categories:
   - openqa
 tags:
@@ -11,8 +12,8 @@ tags:
 ---
 Due to recent changes in the worker configuration of the SUSE internal openQA instance, we needed to reconfigure some of the PowerPC jobs in openQA. This triggered a couple of questions regarding the availability of openQA worker, worker backends, their differences and their caveats. This blog post should act as a quickstart/overview guide for people getting into OpenQA testing on the PowerPC architecture.
 
-PowerPC jobs can either run as native virtual machines on **PowerVM**, leveraging the full power of PowerPC (pun intended!) or as KVM-powered virtual machines, henceforth **KVM on PowerNV**.
-While PowerVM is the only officially recommended way from IBM, in openQA we use KVM on PowerNV successfully for years. OpenQA has backends for PowerVM and KVM on PowerNV but since both comes with different shortcoming, it is difficult to give a recommendation which one to use.
+PowerPC jobs can run in three different modi: as native virtual machines on **PowerVM**, leveraging the full power of PowerPC (pun intended!), as KVM-powered virtual machines, henceforth **KVM on PowerNV** or as [emulated PowerPC jobs](#emulated) on non-native PowerVM hardware, e,g. x86_64.
+While PowerVM is the only officially recommended way from IBM, in openQA we use KVM on PowerNV successfully for years. OpenQA has backends for PowerVM and KVM on PowerNV but since both comes with different shortcoming, it is difficult to give a recommendation which one to use. Emulated PowerPC jobs should be avoided because they are very slow.
 
 ## TL;DR
 
@@ -20,6 +21,7 @@ While PowerVM is the only officially recommended way from IBM, in openQA we use 
 * `qemu_ppc64le` provides a more openQA feature-complete backend
 * `ppc64le_hmc` is more likely to run on more recent hardware (Power10), but comes with caveats (see [below](#caveats))
 * `ppc64le_hmc` is not (yet) available on [openqa.opensuse.org](https://openqa.opensuse.org)
+* Emulated PowerPC workers exist, but they are very slow. Details [see below](#emulated).
 
 When selecting a PowerPC backend, use the [caveats section](#caveats) below for a help to decide which backend fits your use case better.
 
@@ -53,6 +55,22 @@ KVM on PowerNV is realized by running a default SUSE/openSUSE installation on Po
 
 Be advised, that the current PowerPC workers for [openqa.opensuse.org](https://openqa.opensuse.org) are based on Power8 and the future for PowerNV for Power10 (and later) is uncertain.
 
+## Emulated PowerPC in openQA {#emulated}
+
+OpenQA allows to use qemu-emulated PowerPC virtual machines. They do work but they are very slow. To run an emulated VM, you can use the default `qemu_x86_64` WORKER_CLASS and then apply the following settings:
+
+```
+QEMU=ppc64
+QEMUCPU=POWER9
+QEMU_NO_KVM=1
+```
+
+Because those test runs are so slow, consider also using `TIMEOUT_SCALE=2`. This will increase all timeouts by a factor of two, so you don't need to manually increase timeouts in `script_run` and for `MAX_JOB_TIME`, and so on. This is needed, because otherwise those jobs very likely run into various timeout issues.
+
+Emulated PowerPC jobs do work but are not recommended. Use them only if you really need to.
+
+This configuration also works for other emulated hardware, e.g. for [emulated aarch64](/posts/2022/2022-10-04-emulated_aarch64_worker/) I wrote about some time ago.
+
 # Known caveats {#caveats}
 
 * `ppc64le_hmc` only supports raw images, but not `qcow` or `qcow2`
@@ -67,3 +85,7 @@ Be advised, that the current PowerPC workers for [openqa.opensuse.org](https://o
 ## Credits
 
 Big thanks to Nick Singer, for helping to write this blog post!
+
+***
+
+* Edit 02.12.2024 - Added [emulated PowerPC](#emulated).
