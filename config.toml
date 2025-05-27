@@ -29,6 +29,7 @@ metaDataFormat = "yaml"
   wordCount = true
   socialShare = true
   selfHosted = true
+  displayDisqus = false
 
 [params.author]
   name = "phoenix"
