@@ -51,11 +51,13 @@ Type "help" for help.
 postgres=#
 ```
 
-This container is ephermal. When it stops it will be deleted (That's the `--rm`). This is ok, because the data is in the `postgresql` volume and you can just create a new container.
+This container is ephemeral. When it stops it will be deleted (That's the `--rm`). This is ok, because the data is in the `postgresql` volume and you can just create a new container.
 
 ## Create the destination volume and container
 
 For the migration, we will migrate the existing data over into a new container (and new volume). We need to create them in the same way as we have created the original container but will use version 16.
+
+> Note: On newer versions the path is `/var/lib/postgresql`
 
 ```
 # podman volume create postgresql16
@@ -158,6 +160,8 @@ NotifyAccess=all
 WantedBy=default.target
 ```
 
+> Note: On newer versions the path is `/var/lib/postgresql`
+
 Here you can see, that we are using the `/srv/postgresql` data directory (with a private SELinux label, that's the `Z`) and we are using version 15, which we want to upgrade/migrate to version 16.
 
 For the migration the systemd service is stopped, and we are doing the above procedure on ephermal containers. After the migration is done, we will update the version tag to 16 and restart the service.
@@ -208,3 +212,8 @@ Congratulations, you should have successfully updates your PostgreSQL container 
 # References
 
 * https://www.postgresql.org/docs/16/upgrading.html
+
+
+# Update
+
+2025-09-29 - Note that on newer Postgresql version (18) the path changed from `/var/lib/postgresql/data` to `/var/lib/postgresql`.
