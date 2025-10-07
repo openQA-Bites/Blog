@@ -19,11 +19,11 @@ However there are situations, in which you can't do everything on your own insta
 Use `openqa-clone-custom-git-refspec`, which already takes care of those things for you. Or:
 
 ```
-openqa-clone-job ... _GROUP=0 [BUILD=wuseldusel] [TEST=wuseldusel]
-openqa-clone-job ... _GROUP=0 {TEST,BUILD}+=-phoenix-poo123456
+openqa-clone-job ... _GROUP_ID=0 [BUILD=wuseldusel] [TEST=wuseldusel]
+openqa-clone-job ... _GROUP_ID=0 {TEST,BUILD}+=-phoenix-poo123456
 ```
 
-`_GROUP=0` is obligatory, `BUILD` and `TEST` are optional. If you don't set them, the cloned job will stil show up in the Next/Previous job list.
+`_GROUP_ID=0` is obligatory, `BUILD` and `TEST` are optional but if you don't set them, the cloned job will show up in the Next/Previous job list.
 
 Change or remove `PUBLISH_HDD_x` variables, if present, to avoid asset overwrite.
 
