@@ -44,6 +44,10 @@ Restart a job but not its [directly chained parents](http://open.qa/docs/#_notes
 
 This is often referred to as "isos post" because it has been used to [test an ISO image](http://open.qa/docs/#_adding_a_new_iso_to_test). Nowadays we are also testing non-iso images
 
+If you need to limit it to a certain job group (e.g. `1` or `openSUSE Tumbleweed `) use e.g. `_GROUP_ID=1` for selecting the job group by id or `_GROUP="openSUSE Tumbleweed"` to select it by name.
+
+See also [open.qa/docs](https://open.qa/docs/#_spawning_multiple_jobs_based_on_templates_isos_post) for a listing of possible scheduling parameters.
+
 ### Post a new job with `json` parameters
 
 To post a job with settings from a `json` file
