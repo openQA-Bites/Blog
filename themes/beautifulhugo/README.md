@@ -30,7 +30,7 @@ Add Beautifulhugo module as a dependency of your site:
 
 Copy the content of `exampleSite` at the root of your project:
 
-    cp -r themes/beautifulhugo/exampleSite/* . -iv
+    cp -riv themes/beautifulhugo/exampleSite/* .
 
 If you installed Beautifulhugo as hugo module, set your theme in your config file (hugo.toml):
 
@@ -215,6 +215,12 @@ To avoid this, set the following param in hugo.toml:
 ```
 [Params]
   selfHosted = true
+```
+
+### Other parameters
+```toml
+[params]
+  showPageDates = false # disables the dates below pages, can be controlled in page frontmatter, too
 ```
 
 ### Extra shortcodes
