@@ -49,4 +49,4 @@ Max kernel policy version:      35
 ## TLDR
 
 Using `validate_script_output` shows the actual output and the expected pattern directly
-in openQA is is thus typically the better choice than a `assert_script_run("... | grep ...")`.
+in openQA is thus typically the better choice than a `assert_script_run("... | grep ...")`.
